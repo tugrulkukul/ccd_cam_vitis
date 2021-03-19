@@ -323,9 +323,9 @@ void afe_config(int ic_num)
 		write_afe(ic_num, 31, 0x00); // to page 0
 
 		// page 0
-		if(!ic_num)//master afe, afe-1
-			write_afe(ic_num, 0, 0x03); // Master mode
-		else
+		//if(!ic_num)//master afe, afe-1
+		//	write_afe(ic_num, 0, 0x03); // Master mode
+		//else
 			write_afe(ic_num, 0, 0x01); // non master
 		//end of babishov
 	return;
@@ -627,7 +627,7 @@ static void initUDPserver(void)
 
 	buflen = UDP_PAYLOAD_LENGTH;
 
-	p = pbuf_alloc(PBUF_TRANSPORT, buflen, PBUF_POOL);
+	p = pbuf_alloc(PBUF_TRANSPORT, buflen, PBUF_RAM);
 
 	if (!p)
 	{
@@ -643,6 +643,7 @@ int main(void)
 	int status;
 	unsigned temp;
 	int led_status = 0;
+	int time_count = 0;
 	u8 counter;
 
 	Xil_DCacheDisable(); //use this otherwise cpu uses cached old data
@@ -690,13 +691,7 @@ int main(void)
 	//uint regVal1, regVal2;
 	while(1)
 	{
-		if(led_status == 6)
-			led_status = 5;
-		else if(led_status == 5)
-			led_status = 3;
-		else
-			led_status = 6;
-		XGpio_DiscreteWrite(&gpio_led0, 1, led_status);
+
 
 		xemacif_input(netif);
 
@@ -713,52 +708,77 @@ int main(void)
 		int i;
 
 		counter = 0;
-		unsigned short *payload_u8_ptr;
-		unsigned short *odd_u8_ptr;
-		unsigned short *even_u8_ptr;
+		unsigned char *payload_u8_ptr;
+		unsigned char *odd_u8_ptr;
+		unsigned char *even_u8_ptr;
+		unsigned short r[50],g[50],b[50];
+		unsigned short r2[50],g2[50],b2[50];
 
 		payload_u8_ptr = p->payload;
-		odd_u8_ptr = (unsigned short *)MEM_BASE_ADDR;
-		even_u8_ptr = (unsigned short *)MEM_BASE_ADDR2;
+		odd_u8_ptr = (unsigned char *)MEM_BASE_ADDR;
+		even_u8_ptr = (unsigned char *)MEM_BASE_ADDR2;
 
 
-		for(counter = 0; counter < 54; counter++)
+		if(time_count == 20)
 		{
-			memcpy(p->payload, &counter, sizeof(u8));
-			//memcpy(p->payload+1, (int *)addr_count, MEM_BASE_ADDR + 1000);
-			//addr_count += 1000;
-			for(i = 0; i < 50; i++)
+			if(led_status == 6)
+				led_status = 5;
+			else if(led_status == 5)
+				led_status = 3;
+			else
+				led_status = 6;
+			XGpio_DiscreteWrite(&gpio_led0, 1, led_status);
+
+			for(counter = 0; counter < 54; counter++)
 			{
-				payload_u8_ptr[1+(i*6)] = *odd_u8_ptr;
-				odd_u8_ptr++;
-				payload_u8_ptr[1+(i*6)+1] = *odd_u8_ptr;
-				odd_u8_ptr++;
-				payload_u8_ptr[1+(i*6)+2] = *odd_u8_ptr;
-				odd_u8_ptr++;
-				payload_u8_ptr[1+(i*6)+3] = *odd_u8_ptr;
-				odd_u8_ptr++;
-				payload_u8_ptr[1+(i*6)+4] = *odd_u8_ptr;
-				odd_u8_ptr++;
-				payload_u8_ptr[1+(i*6)+5] = *odd_u8_ptr;
-				odd_u8_ptr++;
+				memcpy(p->payload, &counter, sizeof(u8));
+				//memcpy(p->payload+1, (int *)addr_count, MEM_BASE_ADDR + 1000);
+				//addr_count += 1000;
+				for(i = 0; i < 50; i++)
+				{
+					payload_u8_ptr[1+(i*12)] = *odd_u8_ptr;
+					odd_u8_ptr++;
+					payload_u8_ptr[1+(i*12)+1] = *odd_u8_ptr;
+					odd_u8_ptr++;
+					r[i] = payload_u8_ptr[1+(i*12) + 1] << 8 | payload_u8_ptr[1+(i*12)];
+					payload_u8_ptr[1+(i*12)+2] = *odd_u8_ptr;
+					odd_u8_ptr++;
+					payload_u8_ptr[1+(i*12)+3] = *odd_u8_ptr;
+					odd_u8_ptr++;
+					g[i] = payload_u8_ptr[1+(i*12) + 3] << 8 | payload_u8_ptr[1+(i*12)+2];
+					payload_u8_ptr[1+(i*12)+4] = *odd_u8_ptr;
+					odd_u8_ptr++;
+					payload_u8_ptr[1+(i*12)+5] = *odd_u8_ptr;
+					odd_u8_ptr++;
+					b[i] = payload_u8_ptr[1+(i*12) + 5] << 8 | payload_u8_ptr[1+(i*12)+4];
 
-				payload_u8_ptr[1+(i*6) +6] = *even_u8_ptr;
-				even_u8_ptr++;
-				payload_u8_ptr[1+(i*6)+7] = *even_u8_ptr;
-				even_u8_ptr++;
-				payload_u8_ptr[1+(i*6)+8] = *even_u8_ptr;
-				even_u8_ptr++;
-				payload_u8_ptr[1+(i*6)+9] = *even_u8_ptr;
-				even_u8_ptr++;
-				payload_u8_ptr[1+(i*6)+10] = *even_u8_ptr;
-				even_u8_ptr++;
-				payload_u8_ptr[1+(i*6)+11] = *even_u8_ptr;
-				even_u8_ptr++;
+					payload_u8_ptr[1+(i*12) +6] = *even_u8_ptr;
+					even_u8_ptr++;
+					payload_u8_ptr[1+(i*12)+7] = *even_u8_ptr;
+					even_u8_ptr++;
+					r2[i] = payload_u8_ptr[1+(i*12) + 7] << 8 | payload_u8_ptr[1+(i*12)+6];
+					payload_u8_ptr[1+(i*12)+8] = *even_u8_ptr;
+					even_u8_ptr++;
+					payload_u8_ptr[1+(i*12)+9] = *even_u8_ptr;
+					even_u8_ptr++;
+					g2[i] = payload_u8_ptr[1+(i*12) + 9] << 8 | payload_u8_ptr[1+(i*12)+8];
+					payload_u8_ptr[1+(i*12)+10] = *even_u8_ptr;
+					even_u8_ptr++;
+					payload_u8_ptr[1+(i*12)+11] = *even_u8_ptr;
+					even_u8_ptr++;
+					b2[i] = payload_u8_ptr[1+(i*12) + 11] << 8 | payload_u8_ptr[1+(i*12)+10];
 
-				//memcpy(payload_u8_ptr+1+(i*6), (unsigned char *)(MEM_BASE_ADDR + (counter*300) + (i*6)), 6);
-				//memcpy(payload_u8_ptr+1+(i*6)+6, (unsigned char *)(MEM_BASE_ADDR2 + (counter*300) + (i*6)), 6);
+				}
+				udp_send(udp_1, p);
+				usleep(1000 * 1);
 			}
-			udp_send(udp_1, p);
+			XGpio_DiscreteSet(&gpio_lm, 1, 0x00000033); //set sh_r to high
+			time_count = 0;
+		}
+		else
+		{
+			XGpio_DiscreteSet(&gpio_lm, 1, 0x00000022); //set sh_r to low
+			time_count++;
 		}
 		usleep(1000 * 20);
 		//sleep(1);

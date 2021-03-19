@@ -516,6 +516,87 @@ static u32_t get_TI_phy_speed(XEmacPs *xemacpsp, u32_t phy_addr)
 	return XST_SUCCESS;
 }
 
+static u32_t get_Microchip_phy_speed(XEmacPs *xemacpsp, u32_t phy_addr)
+{
+	//u16_t temp;
+	u16_t control;
+	u16_t status;
+	u16_t status_speed;
+	u32_t timeout_counter = 0;
+	u32_t temp_speed;
+
+	xil_printf("Start PHY autonegotiation for Microchip PHY\r\n");
+
+	XEmacPs_PhyRead(xemacpsp, phy_addr, IEEE_AUTONEGO_ADVERTISE_REG, &control);
+	control |= IEEE_ASYMMETRIC_PAUSE_MASK;
+	control |= IEEE_PAUSE_MASK;
+	control |= ADVERTISE_100;
+	control |= ADVERTISE_10;
+	XEmacPs_PhyWrite(xemacpsp, phy_addr, IEEE_AUTONEGO_ADVERTISE_REG, control);
+
+	XEmacPs_PhyRead(xemacpsp, phy_addr, IEEE_1000_ADVERTISE_REG_OFFSET,
+					&control);
+	control |= ADVERTISE_1000;
+	XEmacPs_PhyWrite(xemacpsp, phy_addr, IEEE_1000_ADVERTISE_REG_OFFSET,
+					control);
+
+	XEmacPs_PhyRead(xemacpsp, phy_addr, IEEE_CONTROL_REG_OFFSET, &control);
+	control |= IEEE_CTRL_AUTONEGOTIATE_ENABLE;
+	control |= IEEE_STAT_AUTONEGOTIATE_RESTART;
+	XEmacPs_PhyWrite(xemacpsp, phy_addr, IEEE_CONTROL_REG_OFFSET, control);
+
+	XEmacPs_PhyRead(xemacpsp, phy_addr, IEEE_CONTROL_REG_OFFSET, &control);
+	control |= IEEE_CTRL_RESET_MASK;
+	XEmacPs_PhyWrite(xemacpsp, phy_addr, IEEE_CONTROL_REG_OFFSET, control);
+
+	while (1) {
+		XEmacPs_PhyRead(xemacpsp, phy_addr, IEEE_CONTROL_REG_OFFSET, &control);
+		if (control & IEEE_CTRL_RESET_MASK)
+			continue;
+		else
+			break;
+	}
+
+	XEmacPs_PhyRead(xemacpsp, phy_addr, IEEE_STATUS_REG_OFFSET, &status);
+
+	xil_printf("Waiting for PHY to complete autonegotiation... ");
+
+	while ( !(status & IEEE_STAT_AUTONEGOTIATE_COMPLETE) ) {
+		sleep(1);
+		// this is MArvell PHY specific and does not seem to actually do anything
+//		XEmacPs_PhyRead(xemacpsp, phy_addr,
+//						IEEE_COPPER_SPECIFIC_STATUS_REG_2,  &temp);
+		timeout_counter++;
+
+		if (timeout_counter == 30) {
+			xil_printf(" auto negotiation error \r\n");
+			return XST_FAILURE;
+		}
+		XEmacPs_PhyRead(xemacpsp, phy_addr, IEEE_STATUS_REG_OFFSET, &status);
+	}
+	xil_printf(" autonegotiation complete \r\n");
+
+	XEmacPs_PhyRead(xemacpsp, phy_addr,31,
+					&status_speed);
+	// check that link status is "Not failing"
+	if ((status_speed & 0x1) == 0) {
+		temp_speed = status_speed & 0x70;  // mask out the speed indication bits
+
+		if (temp_speed == 0x40)
+			return 1000;
+		else if(temp_speed == 0x20)
+			return 100;
+		else if(temp_speed == 0x10)
+			return 10;
+		else
+			xil_printf("Could not get the negotiated speed from the PHY \r\n");
+	}
+
+	xil_printf("PHY indicated link failure, could not get the negotiated speed \r\n");
+
+	return XST_SUCCESS;
+}
+
 static u32_t get_Marvell_phy_speed(XEmacPs *xemacpsp, u32_t phy_addr)
 {
 	u16_t temp;
@@ -688,7 +769,12 @@ static u32_t get_IEEE_phy_speed(XEmacPs *xemacpsp, u32_t phy_addr)
 		RetStatus = get_TI_phy_speed(xemacpsp, phy_addr);
 	} else if (phy_identity == PHY_REALTEK_IDENTIFIER) {
 		RetStatus = get_Realtek_phy_speed(xemacpsp, phy_addr);
-	} else {
+	} else if (phy_identity == 0x0022)
+	{
+		RetStatus = get_Microchip_phy_speed(xemacpsp, phy_addr);
+	}
+	else {
+
 		RetStatus = get_Marvell_phy_speed(xemacpsp, phy_addr);
 	}
 
