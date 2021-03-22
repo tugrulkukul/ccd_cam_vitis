@@ -136,198 +136,198 @@ void init_heartbeat(void)
 void afe_config(int ic_num)
 {
 	//babishov
-		// page 0
+	// page 0
 
-		write_afe(ic_num, 0, 0x00);
-		write_afe(ic_num, 1, 0x40);
-		write_afe(ic_num, 2, 0xC2);
-		write_afe(ic_num, 3, 0x46);
-		write_afe(ic_num, 4, 0x08);
-		write_afe(ic_num, 5, 0x40);
-		write_afe(ic_num, 6, 0x00); //no test data
-		write_afe(ic_num, 8, 0x04);
-		write_afe(ic_num, 9, 0x14);
-		write_afe(ic_num, 10, 0x04);
-		write_afe(ic_num, 11, 0x14);
-		write_afe(ic_num, 12, 0x04);
-		write_afe(ic_num, 13, 0x14);
-		write_afe(ic_num, 14, 0x18);
-		write_afe(ic_num, 15, 0x28);
-		write_afe(ic_num, 16, 0x18);
-		write_afe(ic_num, 17, 0x28);
-		write_afe(ic_num, 18, 0x18);
-		write_afe(ic_num, 19, 0x28);
-		write_afe(ic_num, 20, 0x00);
-		write_afe(ic_num, 21, 0x00);
-		write_afe(ic_num, 31, 0x01); // go to the page 1
+	write_afe(ic_num, 0, 0x00);
+	write_afe(ic_num, 1, 0x40);
+	write_afe(ic_num, 2, 0xC2);
+	write_afe(ic_num, 3, 0x46);
+	write_afe(ic_num, 4, 0x08);
+	write_afe(ic_num, 5, 0x40);
+	write_afe(ic_num, 6, 0x00); //no test data
+	write_afe(ic_num, 8, 0x04);
+	write_afe(ic_num, 9, 0x14);
+	write_afe(ic_num, 10, 0x04);
+	write_afe(ic_num, 11, 0x14);
+	write_afe(ic_num, 12, 0x04);
+	write_afe(ic_num, 13, 0x14);
+	write_afe(ic_num, 14, 0x18);
+	write_afe(ic_num, 15, 0x28);
+	write_afe(ic_num, 16, 0x18);
+	write_afe(ic_num, 17, 0x28);
+	write_afe(ic_num, 18, 0x18);
+	write_afe(ic_num, 19, 0x28);
+	write_afe(ic_num, 20, 0x00);
+	write_afe(ic_num, 21, 0x00);
+	write_afe(ic_num, 31, 0x01); // go to the page 1
 
-		// page 1
-		write_afe(ic_num, 0, 0x00);
-		write_afe(ic_num, 1, 0x61);
-		write_afe(ic_num, 2, 0x61);
-		write_afe(ic_num, 3, 0x61);
-		write_afe(ic_num, 4, 0x90);
-		write_afe(ic_num, 5, 0x00);
-		write_afe(ic_num, 6, 0x90);
-		write_afe(ic_num, 7, 0x00);
-		write_afe(ic_num, 8, 0x76);
-		write_afe(ic_num, 9, 0x00);
-		write_afe(ic_num, 10, 0x90);
-		write_afe(ic_num, 11, 0x00);
-		write_afe(ic_num, 12, 0x90);
-		write_afe(ic_num, 13, 0x00);
-		write_afe(ic_num, 14, 0x76);
-		write_afe(ic_num, 15, 0x00);
-		write_afe(ic_num, 31, 0x02); // to page 2
+	// page 1
+	write_afe(ic_num, 0, 0x00);
+	write_afe(ic_num, 1, 0x61);
+	write_afe(ic_num, 2, 0x61);
+	write_afe(ic_num, 3, 0x61);
+	write_afe(ic_num, 4, 0x90);
+	write_afe(ic_num, 5, 0x00);
+	write_afe(ic_num, 6, 0x90);
+	write_afe(ic_num, 7, 0x00);
+	write_afe(ic_num, 8, 0x76);
+	write_afe(ic_num, 9, 0x00);
+	write_afe(ic_num, 10, 0x90);
+	write_afe(ic_num, 11, 0x00);
+	write_afe(ic_num, 12, 0x90);
+	write_afe(ic_num, 13, 0x00);
+	write_afe(ic_num, 14, 0x76);
+	write_afe(ic_num, 15, 0x00);
+	write_afe(ic_num, 31, 0x02); // to page 2
 
-		// page 2
-	//	write_afe(ic_num, 0, 0x00); //ddac disable, black calibration only
-	//	write_afe(ic_num, 1, 0xFF); //infinite black calibration
-	//	write_afe(ic_num, 2, 0x0D); //ddac scaling linear, adac 1/8 scaling, 8 pixels averaged in black loop
-	//	write_afe(ic_num, 3, 0x00); //black calibration target is 0
-	//	write_afe(ic_num, 6, 0x01); //autoclpin start at 	px1
-	//	write_afe(ic_num, 7, 0x02); //autoclpin end at 		px2
-	//	write_afe(ic_num, 8, 0x06); //black loop start at 	px8
-	//	write_afe(ic_num, 9, 0x00); //active pixel start at msb
-	//	write_afe(ic_num, 10, 0x10); //active pixel start at lsb (0x0010)
-	//	write_afe(ic_num, 11, 0x08); //active pixel end at msb
-	//	write_afe(ic_num, 12, 0x42); //active pixel end at lsb (0x0842)
-	//	write_afe(ic_num, 13, 0x08); //total line length msb
-	//	write_afe(ic_num, 14, 0x78); //total line length lsb (0x0878)
+	// page 2
+//	write_afe(ic_num, 0, 0x00); //ddac disable, black calibration only
+//	write_afe(ic_num, 1, 0xFF); //infinite black calibration
+//	write_afe(ic_num, 2, 0x0D); //ddac scaling linear, adac 1/8 scaling, 8 pixels averaged in black loop
+//	write_afe(ic_num, 3, 0x00); //black calibration target is 0
+//	write_afe(ic_num, 6, 0x01); //autoclpin start at 	px1
+//	write_afe(ic_num, 7, 0x02); //autoclpin end at 		px2
+//	write_afe(ic_num, 8, 0x06); //black loop start at 	px8
+//	write_afe(ic_num, 9, 0x00); //active pixel start at msb
+//	write_afe(ic_num, 10, 0x10); //active pixel start at lsb (0x0010)
+//	write_afe(ic_num, 11, 0x08); //active pixel end at msb
+//	write_afe(ic_num, 12, 0x42); //active pixel end at lsb (0x0842)
+//	write_afe(ic_num, 13, 0x08); //total line length msb
+//	write_afe(ic_num, 14, 0x78); //total line length lsb (0x0878)
 
-		write_afe(ic_num, 0x00, 0x00); //only black calibration
-		write_afe(ic_num, 1, 0xFF); //infinite black calibration
-		write_afe(ic_num, 2, 0x0F); //ddac scaling linear, adac 1/8 scaling, 32 pixels averaged in black loop
-		write_afe(ic_num, 3, 0x00); //black calibration target is 0
-		write_afe(ic_num, 0x06, 13); //#of pixel from sh interval end to start of black pixel clamping (0xD = 13)
-		write_afe(ic_num, 0x07, 26); //#of pixel from sh interval end to end of black pixel clamping (0x3D = 26)
-		write_afe(ic_num, 0x08, 29); //black loop start at px29
-		write_afe(ic_num, 0x09, 0x00); //msb#of pixel from sh interval end to first valid data
-		write_afe(ic_num, 0x0A, 0x40); //lsb#of pixel from sh interval end to first valid data (0x0040 = 64)
-		write_afe(ic_num, 0x0B, 0x0A); //msb#of pixel from sh interval end to last valid data
-		write_afe(ic_num, 0x0C, 0xCC); //lsb#of pixel from sh interval end to last valid data (0x0ACC = 2764)
-		write_afe(ic_num, 0x0D, 0x0A); //msb line length
-		write_afe(ic_num, 0x0E, 0xF2); //lsb line length (0x0AD4=2772) + 10(interval3) + 20(interval1,2)
+	write_afe(ic_num, 0x00, 0x00); //only black calibration
+	write_afe(ic_num, 1, 0xFF); //infinite black calibration
+	write_afe(ic_num, 2, 0x0F); //ddac scaling linear, adac 1/8 scaling, 32 pixels averaged in black loop
+	write_afe(ic_num, 3, 0x00); //black calibration target is 0
+	write_afe(ic_num, 0x06, 13); //#of pixel from sh interval end to start of black pixel clamping (0xD = 13)
+	write_afe(ic_num, 0x07, 26); //#of pixel from sh interval end to end of black pixel clamping (0x3D = 26)
+	write_afe(ic_num, 0x08, 29); //black loop start at px29
+	write_afe(ic_num, 0x09, 0x00); //msb#of pixel from sh interval end to first valid data
+	write_afe(ic_num, 0x0A, 0x40); //lsb#of pixel from sh interval end to first valid data (0x0040 = 64)
+	write_afe(ic_num, 0x0B, 0x0A); //msb#of pixel from sh interval end to last valid data
+	write_afe(ic_num, 0x0C, 0xCC); //lsb#of pixel from sh interval end to last valid data (0x0ACC = 2764)
+	write_afe(ic_num, 0x0D, 0x0A); //msb line length
+	write_afe(ic_num, 0x0E, 0xF2); //lsb line length (0x0AD4=2772) + 10(interval3) + 20(interval1,2)
 
-		write_afe(ic_num, 27, 0x00); //enable pll
-		write_afe(ic_num, 28, 0x00); //pll M=0 + 1
-		write_afe(ic_num, 29, 0x00); //pll N=0 + 1
-		//25/3 output
-		//25/9mhz pixel clk
+	write_afe(ic_num, 27, 0x00); //enable pll
+	write_afe(ic_num, 28, 0x00); //pll M=0 + 1
+	write_afe(ic_num, 29, 0x00); //pll N=0 + 1
+	//25/3 output
+	//25/9mhz pixel clk
 
-		write_afe(ic_num, 31, 0x03); // to page3
+	write_afe(ic_num, 31, 0x03); // to page3
 
-		// page 3
-		//write_afe(ic_num, 0, 0x14); //set sh interval 0 length 20
-		//write_afe(ic_num, 1, 0x0A); //set sh interval 1 length 10
-		//write_afe(ic_num, 2, 0x0A); //set sh interval 2 length 10
-		//write_afe(ic_num, 3, 0x00); //set sh interval 3 length 0
+	// page 3
+	//write_afe(ic_num, 0, 0x14); //set sh interval 0 length 20
+	//write_afe(ic_num, 1, 0x0A); //set sh interval 1 length 10
+	//write_afe(ic_num, 2, 0x0A); //set sh interval 2 length 10
+	//write_afe(ic_num, 3, 0x00); //set sh interval 3 length 0
 
-		write_afe(ic_num, 0, 0x0A); //set sh interval 0 length 10
-		write_afe(ic_num, 1, 0x0A); //set sh interval 1 length 10
-		write_afe(ic_num, 2, 0x0A); //set sh interval 2 length 10
-		write_afe(ic_num, 31, 0x04); // to page 4
+	write_afe(ic_num, 0, 0x0A); //set sh interval 0 length 10
+	write_afe(ic_num, 1, 0x0A); //set sh interval 1 length 10
+	write_afe(ic_num, 2, 0x0A); //set sh interval 2 length 10
+	write_afe(ic_num, 31, 0x04); // to page 4
 
-		// page 4
-		//write_afe(ic_num, 0, 0x01); //phic1 is high in sh interval 0
-		//write_afe(ic_num, 1, 0x01); //phic1 is high in sh interval 1
-		//write_afe(ic_num, 2, 0x01); //phic1 is high in sh interval 2
-		write_afe(ic_num, 0, 0x11); //phia1&phic1 is high in sh interval 0
-		write_afe(ic_num, 1, 0x11); //phia1&phic1 is high in sh interval 1
-		write_afe(ic_num, 2, 0x11); //phia1&phic1 is high in sh interval 2
-		write_afe(ic_num, 31, 0x05); // to page 5
+	// page 4
+	//write_afe(ic_num, 0, 0x01); //phic1 is high in sh interval 0
+	//write_afe(ic_num, 1, 0x01); //phic1 is high in sh interval 1
+	//write_afe(ic_num, 2, 0x01); //phic1 is high in sh interval 2
+	write_afe(ic_num, 0, 0x11); //phia1&phic1 is high in sh interval 0
+	write_afe(ic_num, 1, 0x11); //phia1&phic1 is high in sh interval 1
+	write_afe(ic_num, 2, 0x11); //phia1&phic1 is high in sh interval 2
+	write_afe(ic_num, 31, 0x05); // to page 5
 
-		// page 5
-		//write_afe(ic_num, 0, 0x18); //sh5,sh4 are high in sh interval 0
-		//write_afe(ic_num, 1, 0x0C); //sh4,sh3 are high in sh interval 1
-		//write_afe(ic_num, 2, 0x04); //sh3 is high in sh interval 2
-		write_afe(ic_num, 0, 0x00); //all sh outputs are low in sh interval 0
-		write_afe(ic_num, 1, 0x1F); //all sh outputs are high in sh interval 1
-		write_afe(ic_num, 2, 0x00); //all sh outputs are low in sh interval 2
-		write_afe(ic_num, 31, 0x06); // to page 6
+	// page 5
+	//write_afe(ic_num, 0, 0x18); //sh5,sh4 are high in sh interval 0
+	//write_afe(ic_num, 1, 0x0C); //sh4,sh3 are high in sh interval 1
+	//write_afe(ic_num, 2, 0x04); //sh3 is high in sh interval 2
+	write_afe(ic_num, 0, 0x00); //all sh outputs are low in sh interval 0
+	write_afe(ic_num, 1, 0x1F); //all sh outputs are high in sh interval 1
+	write_afe(ic_num, 2, 0x00); //all sh outputs are low in sh interval 2
+	write_afe(ic_num, 31, 0x06); // to page 6
 
-		// page 6
-		//phia output 0x0000001FFFFF ___________________________|-------------------|
-		//phib output 0x0000001FFFFF ___________________________|-------------------|
-		//phic output 0x0000001FFFFF ___________________________|-------------------|
-		//rs output   0x001E00000000 ___________|--|_________________________________
-		//cp output   0x0003F8000000 ______________|-----|___________________________
-		write_afe(ic_num, 0, 0x00); //phia output 0x0000001FFFFF
-		write_afe(ic_num, 1, 0x00);
-		write_afe(ic_num, 2, 0x00);
-		write_afe(ic_num, 3, 0x1F);
-		write_afe(ic_num, 4, 0xFF);
-		write_afe(ic_num, 5, 0xFF);
-		write_afe(ic_num, 6, 0x00); //phib output 0x0000001FFFFF
-		write_afe(ic_num, 7, 0x00);
-		write_afe(ic_num, 8, 0x00);
-		write_afe(ic_num, 9, 0x1F);
-		write_afe(ic_num, 10, 0xFF);
-		write_afe(ic_num, 11, 0xFF);
-		write_afe(ic_num, 12, 0x00); //phic output 0x0000001FFFFF
-		write_afe(ic_num, 13, 0x00);
-		write_afe(ic_num, 14, 0x00);
-		write_afe(ic_num, 15, 0x1F);
-		write_afe(ic_num, 16, 0xFF);
-		write_afe(ic_num, 17, 0xFF);
-		write_afe(ic_num, 18, 0x00); //rs output 0x01FC00000000
-		write_afe(ic_num, 19, 0x1E);
-		write_afe(ic_num, 20, 0x00);
-		write_afe(ic_num, 21, 0x00);
-		write_afe(ic_num, 22, 0x00);
-		write_afe(ic_num, 23, 0x00);
-		write_afe(ic_num, 24, 0x00); //cp output 0x0001FF000000
-		write_afe(ic_num, 25, 0x03);
-		write_afe(ic_num, 26, 0xF8);
-		write_afe(ic_num, 27, 0x00);
-		write_afe(ic_num, 28, 0x00);
-		write_afe(ic_num, 29, 0x00);
-		write_afe(ic_num, 31, 0x07); // to page 7
+	// page 6
+	//phia output 0x0000001FFFFF ___________________________|-------------------|
+	//phib output 0x0000001FFFFF ___________________________|-------------------|
+	//phic output 0x0000001FFFFF ___________________________|-------------------|
+	//rs output   0x001E00000000 ___________|--|_________________________________
+	//cp output   0x0003F8000000 ______________|-----|___________________________
+	write_afe(ic_num, 0, 0x00); //phia output 0x0000001FFFFF
+	write_afe(ic_num, 1, 0x00);
+	write_afe(ic_num, 2, 0x00);
+	write_afe(ic_num, 3, 0x1F);
+	write_afe(ic_num, 4, 0xFF);
+	write_afe(ic_num, 5, 0xFF);
+	write_afe(ic_num, 6, 0x00); //phib output 0x0000001FFFFF
+	write_afe(ic_num, 7, 0x00);
+	write_afe(ic_num, 8, 0x00);
+	write_afe(ic_num, 9, 0x1F);
+	write_afe(ic_num, 10, 0xFF);
+	write_afe(ic_num, 11, 0xFF);
+	write_afe(ic_num, 12, 0x00); //phic output 0x0000001FFFFF
+	write_afe(ic_num, 13, 0x00);
+	write_afe(ic_num, 14, 0x00);
+	write_afe(ic_num, 15, 0x1F);
+	write_afe(ic_num, 16, 0xFF);
+	write_afe(ic_num, 17, 0xFF);
+	write_afe(ic_num, 18, 0x00); //rs output 0x01FC00000000
+	write_afe(ic_num, 19, 0x1E);
+	write_afe(ic_num, 20, 0x00);
+	write_afe(ic_num, 21, 0x00);
+	write_afe(ic_num, 22, 0x00);
+	write_afe(ic_num, 23, 0x00);
+	write_afe(ic_num, 24, 0x00); //cp output 0x0001FF000000
+	write_afe(ic_num, 25, 0x03);
+	write_afe(ic_num, 26, 0xF8);
+	write_afe(ic_num, 27, 0x00);
+	write_afe(ic_num, 28, 0x00);
+	write_afe(ic_num, 29, 0x00);
+	write_afe(ic_num, 31, 0x07); // to page 7
 
-		// page 7
-		write_afe(ic_num, 0, 0x0A); //msb of Pixel count where sh1 goes low to high
-		write_afe(ic_num, 1, 0xD4); //lsb of Pixel count where sh1 goes low to high (0x0AD4=2772)
-		write_afe(ic_num, 4, 0x0A); //msb of Pixel count where sh2 goes low to high
-		write_afe(ic_num, 5, 0xD4); //lsb of Pixel count where sh2 goes low to high (0x0AD4=2772)
-		write_afe(ic_num, 8, 0x0A); //msb of Pixel count where sh3 goes low to high
-		write_afe(ic_num, 9, 0xD4); //lsb of Pixel count where sh3 goes low to high (0x0AD4=2772)
-		write_afe(ic_num, 12, 0xFF); //MSBof Pixel count where sh4 goes low to high
-		write_afe(ic_num, 16, 0x0A); //msb of the signal sh5 low to high pixel (0x0AD4=2772)
-		write_afe(ic_num, 17, 0xD4); //lsb of the signal sh5 low to high pixel
-		write_afe(ic_num, 31, 0x08); // to page 8
+	// page 7
+	write_afe(ic_num, 0, 0x0A); //msb of Pixel count where sh1 goes low to high
+	write_afe(ic_num, 1, 0xD4); //lsb of Pixel count where sh1 goes low to high (0x0AD4=2772)
+	write_afe(ic_num, 4, 0x0A); //msb of Pixel count where sh2 goes low to high
+	write_afe(ic_num, 5, 0xD4); //lsb of Pixel count where sh2 goes low to high (0x0AD4=2772)
+	write_afe(ic_num, 8, 0x0A); //msb of Pixel count where sh3 goes low to high
+	write_afe(ic_num, 9, 0xD4); //lsb of Pixel count where sh3 goes low to high (0x0AD4=2772)
+	write_afe(ic_num, 12, 0xFF); //MSBof Pixel count where sh4 goes low to high
+	write_afe(ic_num, 16, 0x0A); //msb of the signal sh5 low to high pixel (0x0AD4=2772)
+	write_afe(ic_num, 17, 0xD4); //lsb of the signal sh5 low to high pixel
+	write_afe(ic_num, 31, 0x08); // to page 8
 
-		// page 8
-		if(!ic_num) //master afe, afe-0
-		{
-			write_afe(ic_num, 0, 0x55); //activate phia1& phia2
-			write_afe(ic_num, 1, 0x55); //activate phib1& phib2
-			write_afe(ic_num, 2, 0x00); //activate phic1& phic2
-			write_afe(ic_num, 3, 0x55); //activate rs &cp
-			write_afe(ic_num, 4, 0x55); //activate sh1&sh2
-			write_afe(ic_num, 5, 0x00); //disable sh3 & sh4
-			write_afe(ic_num, 6, 0x40); //activate sh5
-			write_afe(ic_num, 8, 0x60); //lvds out enable, cmos clkout disable
-		}
-		else //slave afe, afe-1
-		{
-			//since everything is driven by master no need to generate this outputs
-			write_afe(ic_num, 0, 0x00); //disable phia1& phia2
-			write_afe(ic_num, 1, 0x00); //disable phib1& phib2
-			write_afe(ic_num, 2, 0x00); //disable phic1& phic2
-			write_afe(ic_num, 3, 0x00); //disable rs &cp
-			write_afe(ic_num, 4, 0x00); //disable sh1&sh2
-			write_afe(ic_num, 5, 0x00); //disable sh3 & sh4
-			write_afe(ic_num, 6, 0x00); //disable sh5
-			write_afe(ic_num, 8, 0x60); //lvds out enable, cmos clkout disable
-		}
-		write_afe(ic_num, 31, 0x00); // to page 0
+	// page 8
+	if(!ic_num) //master afe, afe-0
+	{
+		write_afe(ic_num, 0, 0x55); //activate phia1& phia2
+		write_afe(ic_num, 1, 0x55); //activate phib1& phib2
+		write_afe(ic_num, 2, 0x00); //activate phic1& phic2
+		write_afe(ic_num, 3, 0x55); //activate rs &cp
+		write_afe(ic_num, 4, 0x55); //activate sh1&sh2
+		write_afe(ic_num, 5, 0x00); //disable sh3 & sh4
+		write_afe(ic_num, 6, 0x40); //activate sh5
+		write_afe(ic_num, 8, 0x60); //lvds out enable, cmos clkout disable
+	}
+	else //slave afe, afe-1
+	{
+		//since everything is driven by master no need to generate this outputs
+		write_afe(ic_num, 0, 0x00); //disable phia1& phia2
+		write_afe(ic_num, 1, 0x00); //disable phib1& phib2
+		write_afe(ic_num, 2, 0x00); //disable phic1& phic2
+		write_afe(ic_num, 3, 0x00); //disable rs &cp
+		write_afe(ic_num, 4, 0x00); //disable sh1&sh2
+		write_afe(ic_num, 5, 0x00); //disable sh3 & sh4
+		write_afe(ic_num, 6, 0x00); //disable sh5
+		write_afe(ic_num, 8, 0x60); //lvds out enable, cmos clkout disable
+	}
+	write_afe(ic_num, 31, 0x00); // to page 0
 
-		// page 0
-		//if(!ic_num)//master afe, afe-1
-		//	write_afe(ic_num, 0, 0x03); // Master mode
-		//else
-			write_afe(ic_num, 0, 0x01); // non master
-		//end of babishov
+	// page 0
+	//if(!ic_num)//master afe, afe-1
+	//	write_afe(ic_num, 0, 0x03); // Master mode
+	//else
+		write_afe(ic_num, 0, 0x01); // non master
+	//end of babishov
 	return;
 }
 
@@ -719,7 +719,7 @@ int main(void)
 		even_u8_ptr = (unsigned char *)MEM_BASE_ADDR2;
 
 
-		if(time_count == 20)
+		if(time_count == 10)
 		{
 			if(led_status == 6)
 				led_status = 5;
@@ -772,12 +772,12 @@ int main(void)
 				udp_send(udp_1, p);
 				usleep(1000 * 1);
 			}
-			XGpio_DiscreteSet(&gpio_lm, 1, 0x00000033); //set sh_r to high
+			XGpio_DiscreteSet(&gpio_lm, 1, 0x00000011); //set sh_r to high
 			time_count = 0;
 		}
 		else
 		{
-			XGpio_DiscreteSet(&gpio_lm, 1, 0x00000022); //set sh_r to low
+			XGpio_DiscreteClear(&gpio_lm, 1, 0x00000011); //set sh_r to low
 			time_count++;
 		}
 		usleep(1000 * 20);
