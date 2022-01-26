@@ -1,4 +1,3 @@
-
 #include "xparameters.h"
 #include "xgpio.h"
 #include "sleep.h"
@@ -199,15 +198,15 @@ void afe_config(int ic_num)
 	write_afe(ic_num, 1, 0xFF); //infinite black calibration
 	write_afe(ic_num, 2, 0x0F); //ddac scaling linear, adac 1/8 scaling, 32 pixels averaged in black loop
 	write_afe(ic_num, 3, 0x00); //black calibration target is 0
-	write_afe(ic_num, 0x06, 13); //#of pixel from sh interval end to start of black pixel clamping (0xD = 13)
-	write_afe(ic_num, 0x07, 26); //#of pixel from sh interval end to end of black pixel clamping (0x3D = 26)
-	write_afe(ic_num, 0x08, 29); //black loop start at px29
+	write_afe(ic_num, 0x06, 54); //#of pixel from sh interval end to start of black pixel clamping (0xD = 13)
+	write_afe(ic_num, 0x07, 61); //#of pixel from sh interval end to end of black pixel clamping (0x3D = 26)
+	write_afe(ic_num, 0x08, 62); //black loop start at px29
 	write_afe(ic_num, 0x09, 0x00); //msb#of pixel from sh interval end to first valid data
 	write_afe(ic_num, 0x0A, 0x40); //lsb#of pixel from sh interval end to first valid data (0x0040 = 64)
-	write_afe(ic_num, 0x0B, 0x0A); //msb#of pixel from sh interval end to last valid data
-	write_afe(ic_num, 0x0C, 0xCC); //lsb#of pixel from sh interval end to last valid data (0x0ACC = 2764)
-	write_afe(ic_num, 0x0D, 0x0A); //msb line length
-	write_afe(ic_num, 0x0E, 0xF2); //lsb line length (0x0AD4=2772) + 10(interval3) + 20(interval1,2)
+	write_afe(ic_num, 0x0B, 0x02); //msb#of pixel from sh interval end to last valid data
+	write_afe(ic_num, 0x0C, 0x80); //lsb#of pixel from sh interval end to last valid data (0x0ACC = 2764)
+	write_afe(ic_num, 0x0D, 0x02); //msb line length
+	write_afe(ic_num, 0x0E, 0x8A); //lsb line length (0x0AD4=2772) + 10(interval3) + 20(interval1,2)
 
 	write_afe(ic_num, 27, 0x00); //enable pll
 	write_afe(ic_num, 28, 0x00); //pll M=0 + 1
@@ -297,7 +296,7 @@ void afe_config(int ic_num)
 	write_afe(ic_num, 31, 0x08); // to page 8
 
 	// page 8
-	if(!ic_num) //master afe, afe-0
+	if(ic_num) //master afe, afe-1
 	{
 		write_afe(ic_num, 0, 0x55); //activate phia1& phia2
 		write_afe(ic_num, 1, 0x55); //activate phib1& phib2
@@ -308,7 +307,7 @@ void afe_config(int ic_num)
 		write_afe(ic_num, 6, 0x40); //activate sh5
 		write_afe(ic_num, 8, 0x60); //lvds out enable, cmos clkout disable
 	}
-	else //slave afe, afe-1
+	else //slave afe, afe-0
 	{
 		//since everything is driven by master no need to generate this outputs
 		write_afe(ic_num, 0, 0x00); //disable phia1& phia2
@@ -324,9 +323,9 @@ void afe_config(int ic_num)
 
 	// page 0
 	//if(!ic_num)//master afe, afe-1
-	//	write_afe(ic_num, 0, 0x03); // Master mode
+	write_afe(ic_num, 0, 0x03); // Master mode
 	//else
-		write_afe(ic_num, 0, 0x01); // non master
+	//	write_afe(ic_num, 0, 0x01); // non master
 	//end of babishov
 	return;
 }
@@ -672,7 +671,7 @@ int main(void)
 	/* initialize spi driver */
 	init_spi();
 
-	afe_config(0);
+	// afe_config(0);
 	afe_config(1);
 	XGpio_DiscreteWrite(&gpio_led0, 1, 3); //blue
 
@@ -698,10 +697,8 @@ int main(void)
 /*
 		regVal1 = Xil_In32(vdma_afe1.BaseAddr + 0x30);
 		regVal2 = Xil_In32(vdma_afe2.BaseAddr + 0x30);
-
 		Xil_Out32(vdma_afe1.BaseAddr + 0x34, 0xFFFFFFFF);
 		regVal1 = Xil_In32(vdma_afe1.BaseAddr + 0x34);
-
 		Xil_Out32(vdma_afe2.BaseAddr + 0x34, 0xFFFFFFFF);
 		regVal2 = Xil_In32(vdma_afe2.BaseAddr + 0x34);*/
 
